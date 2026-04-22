@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { useAuth } from '@/lib/auth-context';
 import { getConnectionsForUser, getPendingRequests, respondToConnection, getAllEvents, getProfileById } from '@/lib/store';
-import { Connection, Event } from '@/lib/types';
+import { Connection, Event, ROLE_LABELS } from '@/lib/types';
 
 export default function DashboardPage() {
   const router = useRouter();
@@ -56,7 +56,27 @@ export default function DashboardPage() {
           <h1 className="text-3xl font-bold text-white mb-2">
             Welcome, {profile?.name || 'Member'}
           </h1>
-          <p className="text-[#A3A3A3]">Manage your profile and connections</p>
+          <div className="flex items-center gap-4 flex-wrap">
+            <span className={`px-3 py-1 rounded-full text-sm ${
+              user.role === 'super_admin' ? 'bg-purple-900/30 text-purple-400' :
+              user.role === 'admin' ? 'bg-red-900/30 text-red-400' :
+              user.role === 'manager' ? 'bg-blue-900/30 text-blue-400' :
+              user.role === 'studio_owner' ? 'bg-green-900/30 text-green-400' :
+              'bg-[#C9A962]/20 text-[#C9A962]'
+            }`}>
+              {ROLE_LABELS[user.role]}
+            </span>
+            {!profile?.isVerified && (
+              <span className="px-3 py-1 rounded-full text-sm bg-yellow-900/30 text-yellow-400">
+                Pending Verification
+              </span>
+            )}
+            {profile?.isVerified && (
+              <span className="px-3 py-1 rounded-full text-sm bg-green-900/30 text-green-400">
+                Verified
+              </span>
+            )}
+          </div>
         </div>
 
         {!hasProfile && (

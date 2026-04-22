@@ -3,8 +3,8 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/lib/auth-context';
-import { getAllUsers, getAllProfiles, getAllEvents, getAllConnections, verifyProfile, deactivateUser, getUserById, getProfileById } from '@/lib/store';
-import { User, Profile, Event, Connection } from '@/lib/types';
+import { getAllUsers, getAllProfiles, getAllEvents, getAllConnections, verifyProfile, deactivateUser, getUserById, getProfileById, updateUserRole, rejectProfile, getPendingVerifications } from '@/lib/store';
+import { User, Profile, Event, Connection, UserRole, ROLE_LABELS } from '@/lib/types';
 
 export default function AdminPage() {
   const router = useRouter();
@@ -13,7 +13,9 @@ export default function AdminPage() {
   const [profiles, setProfiles] = useState<Profile[]>([]);
   const [events, setEvents] = useState<Event[]>([]);
   const [connections, setConnections] = useState<Connection[]>([]);
-  const [activeTab, setActiveTab] = useState<'members' | 'profiles' | 'events' | 'connections'>('members');
+  const [activeTab, setActiveTab] = useState<'dashboard' | 'members' | 'profiles' | 'events' | 'connections' | 'pending'>('dashboard');
+  const [selectedUser, setSelectedUser] = useState<User | null>(null);
+  const [showRoleModal, setShowRoleModal] = useState(false);
 
   useEffect(() => {
     if (!user || (user.role !== 'admin' && user.role !== 'super_admin')) {
@@ -21,27 +23,45 @@ export default function AdminPage() {
       return;
     }
 
-    // eslint-disable-next-line react-hooks/set-state-in-effect
-    setUsers(getAllUsers());
-    // eslint-disable-next-line react-hooks/set-state-in-effect
-    setProfiles(getAllProfiles());
-    // eslint-disable-next-line react-hooks/set-state-in-effect
-    setEvents(getAllEvents());
-    // eslint-disable-next-line react-hooks/set-state-in-effect
-    setConnections(getAllConnections());
+    loadData();
   }, [user, router]);
+
+  const loadData = () => {
+    setUsers(getAllUsers());
+    setProfiles(getAllProfiles());
+    setEvents(getAllEvents());
+    setConnections(getAllConnections());
+  };
 
   const handleVerifyProfile = (profileId: string) => {
     verifyProfile(profileId);
-    setProfiles(getAllProfiles());
+    loadData();
+  };
+
+  const handleRejectProfile = (profileId: string) => {
+    const reason = prompt('Please provide a reason for rejection:');
+    if (reason) {
+      rejectProfile(profileId, reason);
+      loadData();
+    }
   };
 
   const handleDeactivateUser = (userId: string) => {
     if (confirm('Are you sure you want to deactivate this user?')) {
       deactivateUser(userId);
-      setUsers(getAllUsers());
+      loadData();
     }
   };
+
+  const handleUpdateRole = (userId: string, newRole: UserRole) => {
+    updateUserRole(userId, newRole);
+    loadData();
+    setShowRoleModal(false);
+    setSelectedUser(null);
+  };
+
+  const pendingProfiles = profiles.filter(p => !p.isVerified);
+  const verifiedProfiles = profiles.filter(p => p.isVerified);
 
   if (!user || (user.role !== 'admin' && user.role !== 'super_admin')) {
     return null;

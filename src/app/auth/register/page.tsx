@@ -88,7 +88,7 @@ export default function RegisterPage() {
 
     login(email, password);
     refreshProfile();
-    router.push('/dashboard');
+    router.push('/auth/register-success');
   };
 
   const toggleInterest = (interest: string) => {
