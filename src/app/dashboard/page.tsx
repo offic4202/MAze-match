@@ -48,6 +48,7 @@ export default function DashboardPage() {
   }
 
   const hasProfile = !!profile;
+  const canCreateProfile = !profile && user.isVerified;
 
   return (
     <div className="min-h-screen py-12 px-6">
@@ -82,10 +83,16 @@ export default function DashboardPage() {
         {!hasProfile && (
           <div className="bg-[#C9A962]/10 border border-[#C9A962] rounded-lg p-6 mb-8">
             <h2 className="text-xl font-semibold text-white mb-2">Complete Your Profile</h2>
-            <p className="text-[#A3A3A3] mb-4">Create your profile to start connecting with others.</p>
-            <Link href="/auth/register" className="btn-primary inline-block">
-              Create Profile
-            </Link>
+            {canCreateProfile ? (
+              <>
+                <p className="text-[#A3A3A3] mb-4">Create your profile to start connecting with others.</p>
+                <Link href="/auth/register" className="btn-primary inline-block">
+                  Create Profile
+                </Link>
+              </>
+            ) : (
+              <p className="text-[#C9A962]">Your account is pending verification. You'll be able to create your profile once approved.</p>
+            )}
           </div>
         )}
 

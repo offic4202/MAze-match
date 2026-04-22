@@ -13,13 +13,13 @@ interface StoreData {
 const initialData: StoreData = {
   users: [
     { id: 'admin1', email: 'admin@themazematch.com', password: 'admin123', role: 'super_admin', isVerified: true, verifiedAt: new Date(), createdAt: new Date() },
-    { id: 'manager1', email: 'manager@themazematch.com', password: 'manager123', role: 'manager', isVerified: true, createdAt: new Date() },
-    { id: 'studio1', email: 'studio@themazematch.com', password: 'studio123', role: 'studio_owner', isVerified: true, createdAt: new Date() },
+    { id: 'manager1', email: 'manager@themazematch.com', password: 'manager123', role: 'manager', isVerified: true, verifiedAt: new Date(), createdAt: new Date() },
+    { id: 'studio1', email: 'studio@themazematch.com', password: 'studio123', role: 'studio_owner', isVerified: true, verifiedAt: new Date(), createdAt: new Date() },
     { id: 'user1', email: 'john@example.com', password: 'user123', role: 'member', profileId: 'profile1', isVerified: true, verifiedAt: new Date(), createdAt: new Date() },
     { id: 'user2', email: 'grace@example.com', password: 'user123', role: 'member', profileId: 'profile2', isVerified: true, verifiedAt: new Date(), createdAt: new Date() },
-    { id: 'user3', email: 'michael@example.com', password: 'user123', role: 'member', profileId: 'profile3', isVerified: false, createdAt: new Date() },
-    { id: 'user4', email: 'amaka@example.com', password: 'user123', role: 'member', profileId: 'profile4', isVerified: false, createdAt: new Date() },
-    { id: 'user5', email: 'david@example.com', password: 'user123', role: 'member', profileId: 'profile5', isVerified: false, createdAt: new Date() },
+    { id: 'user3', email: 'michael@example.com', password: 'user123', role: 'member', profileId: 'profile3', isVerified: true, verifiedAt: new Date(), createdAt: new Date() },
+    { id: 'user4', email: 'amaka@example.com', password: 'user123', role: 'member', profileId: 'profile4', isVerified: true, verifiedAt: new Date(), createdAt: new Date() },
+    { id: 'user5', email: 'david@example.com', password: 'user123', role: 'member', profileId: 'profile5', isVerified: true, verifiedAt: new Date(), createdAt: new Date() },
   ],
   profiles: [
     {
@@ -84,7 +84,8 @@ const initialData: StoreData = {
       photos: ['https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400&h=500&fit=crop'],
       interests: ['Business', 'Volunteering', 'Sports', 'Wine & Dining'],
       lookingFor: 'dating',
-      isVerified: false,
+      isVerified: true,
+      verifiedAt: new Date(),
       createdAt: new Date()
     },
     {
@@ -105,7 +106,8 @@ const initialData: StoreData = {
       photos: ['https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400&h=500&fit=crop'],
       interests: ['Fashion', 'Art', 'Dance', 'Photography'],
       lookingFor: 'marriage',
-      isVerified: false,
+      isVerified: true,
+      verifiedAt: new Date(),
       createdAt: new Date()
     },
     {
