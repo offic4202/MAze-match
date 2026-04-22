@@ -13,6 +13,7 @@ interface StoreData {
 const initialData: StoreData = {
   users: [
     { id: 'admin1', email: 'admin@themazematch.com', password: 'admin123', role: 'super_admin', isVerified: true, verifiedAt: new Date(), createdAt: new Date() },
+    { id: 'admin2', email: 'support@themazematch.com', password: 'support123', role: 'admin', isVerified: true, verifiedAt: new Date(), createdAt: new Date() },
     { id: 'manager1', email: 'manager@themazematch.com', password: 'manager123', role: 'manager', isVerified: true, verifiedAt: new Date(), createdAt: new Date() },
     { id: 'studio1', email: 'studio@themazematch.com', password: 'studio123', role: 'studio_owner', isVerified: true, verifiedAt: new Date(), createdAt: new Date() },
     { id: 'user1', email: 'john@example.com', password: 'user123', role: 'member', profileId: 'profile1', isVerified: true, verifiedAt: new Date(), createdAt: new Date() },
@@ -130,7 +131,12 @@ const initialData: StoreData = {
       lookingFor: 'marriage',
       isVerified: true,
       verifiedAt: new Date(),
-      createdAt: new Date()
+      createdAt: new Date(),
+      socialHandles: {
+        instagram: '@davidchukwu_md',
+        twitter: '@DrDavidChukwu',
+        tiktok: '@DrDavid'
+      }
     },
   ],
   events: [

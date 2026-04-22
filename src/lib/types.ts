@@ -35,7 +35,38 @@ export interface Profile {
   verifiedAt?: Date;
   rejectionReason?: string;
   createdAt: Date;
+  socialHandles?: {
+    instagram?: string;
+    twitter?: string;
+    tiktok?: string;
+    youtube?: string;
+    linkedin?: string;
+    facebook?: string;
+  };
+  monetizationHandles?: {
+    paytag?: string;
+    koraTag?: string;
+    flutterwaveTag?: string;
+    bankName?: string;
+    accountNumber?: string;
+    accountName?: string;
+  };
 }
+
+export const SOCIAL_PLATFORMS = [
+  { key: 'instagram', label: 'Instagram', icon: '📸' },
+  { key: 'twitter', label: 'Twitter/X', icon: '🐦' },
+  { key: 'tiktok', label: 'TikTok', icon: '🎵' },
+  { key: 'youtube', label: 'YouTube', icon: '▶️' },
+  { key: 'linkedin', label: 'LinkedIn', icon: '💼' },
+  { key: 'facebook', label: 'Facebook', icon: '👥' }
+] as const;
+
+export const MONETIZATION_TYPES = [
+  { key: 'paytag', label: 'Paytag', placeholder: 'username' },
+  { key: 'koraTag', label: 'Kora Tag', placeholder: 'business tag' },
+  { key: 'flutterwaveTag', label: 'Flutterwave', placeholder: 'business tag' }
+] as const;
 
 export type EventType = 'charity' | 'dating' | 'social';
 
@@ -91,4 +122,42 @@ export const ROLE_LABELS: Record<UserRole, string> = {
   studio_owner: 'Studio Owner',
   admin: 'Admin',
   super_admin: 'Super Admin'
+};
+
+export const ROLE_PRIVILEGES: Record<UserRole, string[]> = {
+  member: [
+    'Browse verified profiles',
+    'Send/accept connection requests',
+    'RSVP to events',
+    'View own profile & connections',
+    'Update own profile'
+  ],
+  manager: [
+    'All Member privileges',
+    'Create & manage dating events',
+    'View event attendees',
+    'Cancel own events',
+    'Access manager dashboard'
+  ],
+  studio_owner: [
+    'All Member privileges',
+    'Add studio/location for events',
+    'View booking requests',
+    'Accept/reject bookings',
+    'Access studio dashboard'
+  ],
+  admin: [
+    'View all users & profiles',
+    'Verify/reject profiles',
+    'Suspend/delete users',
+    'Moderate content',
+    'View platform analytics'
+  ],
+  super_admin: [
+    'All Admin privileges',
+    'Create Admin/Manager accounts',
+    'Change user roles',
+    'Platform settings',
+    'Full system access'
+  ]
 };
