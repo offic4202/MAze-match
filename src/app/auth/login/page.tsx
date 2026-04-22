@@ -90,15 +90,6 @@ export default function LoginPage() {
             </Link>
           </p>
         </div>
-
-        <div className="mt-8 p-4 bg-[#1F1F1F] rounded-lg">
-          <p className="text-[#A3A3A3] text-sm mb-2">Demo Accounts:</p>
-          <div className="text-sm text-[#A3A3A3] space-y-1">
-            <p><span className="text-white">Admin:</span> admin@themazematch.com / admin123</p>
-            <p><span className="text-white">Manager:</span> manager@themazematch.com / manager123</p>
-            <p><span className="text-white">Member:</span> john@example.com / user123</p>
-          </div>
-        </div>
       </div>
     </div>
   );
