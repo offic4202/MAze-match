@@ -117,7 +117,7 @@ export default function Home() {
                     <div className="absolute inset-0 bg-gradient-to-t from-[#0D0D0D] via-transparent to-transparent" />
                     <div className="absolute bottom-4 left-4 right-4">
                       <h3 className="text-xl font-semibold text-white">{profile.name}</h3>
-                      <p className="text-[#A3A3A3]">{profile.age} • {profile.location}</p>
+                      <p className="text-[#A3A3A3]">{profile.dateOfBirth ? new Date().getFullYear() - new Date(profile.dateOfBirth).getFullYear() : '--'} • {profile.location}</p>
                     </div>
                   </div>
                 </div>
