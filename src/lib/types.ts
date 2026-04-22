@@ -1,4 +1,6 @@
-export type UserRole = 'member' | 'manager' | 'admin';
+export type UserRole = 'member' | 'manager' | 'studio_owner' | 'admin' | 'super_admin';
+
+export type IdType = 'nin' | 'bvn' | 'passport' | 'drivers_license';
 
 export interface User {
   id: string;
@@ -6,6 +8,8 @@ export interface User {
   password: string;
   role: UserRole;
   profileId?: string;
+  isVerified: boolean;
+  verifiedAt?: Date;
   createdAt: Date;
 }
 
@@ -13,8 +17,12 @@ export interface Profile {
   id: string;
   userId: string;
   name: string;
-  age: number;
+  dateOfBirth: string;
   gender: 'male' | 'female';
+  phone: string;
+  idType: IdType;
+  idNumber: string;
+  lga: string;
   location: string;
   state: string;
   occupation: string;
@@ -23,7 +31,9 @@ export interface Profile {
   photos: string[];
   interests: string[];
   lookingFor: 'marriage' | 'dating' | 'networking';
-  verified: boolean;
+  isVerified: boolean;
+  verifiedAt?: Date;
+  rejectionReason?: string;
   createdAt: Date;
 }
 
@@ -67,3 +77,18 @@ export const INTERESTS = [
   'Fashion', 'Sports', 'Movies', 'Technology', 'Business', 'Spirituality',
   'Volunteering', 'Nature', 'Dance', 'Writing', 'Pets', 'Wine & Dining'
 ] as const;
+
+export const ID_TYPES = [
+  { value: 'nin', label: 'National ID (NIN)' },
+  { value: 'bvn', label: 'Bank Verification (BVN)' },
+  { value: 'passport', label: 'International Passport' },
+  { value: 'drivers_license', label: "Driver's License" }
+] as const;
+
+export const ROLE_LABELS: Record<UserRole, string> = {
+  member: 'Member',
+  manager: 'Event Manager',
+  studio_owner: 'Studio Owner',
+  admin: 'Admin',
+  super_admin: 'Super Admin'
+};

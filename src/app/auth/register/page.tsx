@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { registerUser, createProfile } from '@/lib/store';
 import { useAuth } from '@/lib/auth-context';
-import { NIGERIAN_STATES, INTERESTS } from '@/lib/types';
+import { NIGERIAN_STATES, INTERESTS, ID_TYPES, UserRole, ROLE_LABELS } from '@/lib/types';
 
 export default function RegisterPage() {
   const router = useRouter();
@@ -16,10 +16,15 @@ export default function RegisterPage() {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [error, setError] = useState('');
+  const [selectedRole, setSelectedRole] = useState<UserRole>('member');
 
   const [name, setName] = useState('');
-  const [age, setAge] = useState('');
+  const [dateOfBirth, setDateOfBirth] = useState('');
   const [gender, setGender] = useState<'male' | 'female'>('male');
+  const [phone, setPhone] = useState('');
+  const [idType, setIdType] = useState<string>('nin');
+  const [idNumber, setIdNumber] = useState('');
+  const [lga, setLga] = useState('');
   const [location, setLocation] = useState('');
   const [state, setState] = useState('');
   const [occupation, setOccupation] = useState('');
@@ -43,7 +48,7 @@ export default function RegisterPage() {
       return;
     }
 
-    const user = registerUser(email, password, 'member');
+    const user = registerUser(email, password, selectedRole);
     if (user) {
       login(email, password);
     } else {
@@ -56,7 +61,7 @@ export default function RegisterPage() {
     e.preventDefault();
     setError('');
 
-    const user = registerUser(email, password, 'member');
+    const user = registerUser(email, password, selectedRole);
     if (!user) {
       setError('Email already registered');
       return;
@@ -65,8 +70,12 @@ export default function RegisterPage() {
     const profile = createProfile({
       userId: user.id,
       name,
-      age: parseInt(age),
+      dateOfBirth,
       gender,
+      phone,
+      idType: idType as 'nin' | 'bvn' | 'passport' | 'drivers_license',
+      idNumber,
+      lga,
       location,
       state,
       occupation,
@@ -147,6 +156,48 @@ export default function RegisterPage() {
               />
             </div>
 
+            <div>
+              <label className="block text-white mb-2">I am a...</label>
+              <div className="grid grid-cols-1 gap-2">
+                <button
+                  type="button"
+                  onClick={() => setSelectedRole('member')}
+                  className={`py-3 rounded-lg border transition-all text-left ${
+                    selectedRole === 'member'
+                      ? 'border-[#C9A962] bg-[#C9A962]/10 text-white'
+                      : 'border-white/10 text-[#A3A3A3] hover:border-white/30'
+                  }`}
+                >
+                  <span className="block font-medium">Member</span>
+                  <span className="text-sm opacity-70">Looking for connections, dates, or networking</span>
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setSelectedRole('manager')}
+                  className={`py-3 rounded-lg border transition-all text-left ${
+                    selectedRole === 'manager'
+                      ? 'border-[#C9A962] bg-[#C9A962]/10 text-white'
+                      : 'border-white/10 text-[#A3A3A3] hover:border-white/30'
+                  }`}
+                >
+                  <span className="block font-medium">Event Manager</span>
+                  <span className="text-sm opacity-70">Organize dating events, mixers, and social gatherings</span>
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setSelectedRole('studio_owner')}
+                  className={`py-3 rounded-lg border transition-all text-left ${
+                    selectedRole === 'studio_owner'
+                      ? 'border-[#C9A962] bg-[#C9A962]/10 text-white'
+                      : 'border-white/10 text-[#A3A3A3] hover:border-white/30'
+                  }`}
+                >
+                  <span className="block font-medium">Studio Owner</span>
+                  <span className="text-sm opacity-70">Own a photography studio or venue</span>
+                </button>
+              </div>
+            </div>
+
             <button type="submit" className="w-full btn-primary py-4">
               Continue
             </button>
@@ -198,15 +249,12 @@ export default function RegisterPage() {
               />
             </div>
             <div>
-              <label className="block text-white mb-2">Age</label>
+              <label className="block text-white mb-2">Date of Birth</label>
               <input
-                type="number"
-                value={age}
-                onChange={(e) => setAge(e.target.value)}
+                type="date"
+                value={dateOfBirth}
+                onChange={(e) => setDateOfBirth(e.target.value)}
                 className="input-field"
-                placeholder="25"
-                min="18"
-                max="99"
                 required
               />
             </div>
@@ -241,17 +289,67 @@ export default function RegisterPage() {
               </div>
             </div>
             <div>
-              <label className="block text-white mb-2">Looking For</label>
+              <label className="block text-white mb-2">Phone Number</label>
+              <input
+                type="tel"
+                value={phone}
+                onChange={(e) => setPhone(e.target.value)}
+                className="input-field"
+                placeholder="08012345678"
+                required
+              />
+            </div>
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-4">
+            <div>
+              <label className="block text-white mb-2">ID Type</label>
               <select
-                value={lookingFor}
-                onChange={(e) => setLookingFor(e.target.value as 'marriage' | 'dating' | 'networking')}
+                value={idType}
+                onChange={(e) => setIdType(e.target.value)}
                 className="input-field"
               >
-                <option value="marriage">Marriage</option>
-                <option value="dating">Dating</option>
-                <option value="networking">Networking</option>
+                {ID_TYPES.map(id => (
+                  <option key={id.value} value={id.value}>{id.label}</option>
+                ))}
               </select>
             </div>
+            <div>
+              <label className="block text-white mb-2">ID Number</label>
+              <input
+                type="text"
+                value={idNumber}
+                onChange={(e) => setIdNumber(e.target.value)}
+                className="input-field"
+                placeholder="Your ID number"
+                required
+              />
+            </div>
+          </div>
+
+          <div>
+            <label className="block text-white mb-2">LGA (Local Government)</label>
+            <input
+              type="text"
+              value={lga}
+              onChange={(e) => setLga(e.target.value)}
+              className="input-field"
+              placeholder="Your LGA"
+              required
+            />
+          </div>
+
+          <div>
+            <label className="block text-white mb-2">Looking For</label>
+            <select
+              value={lookingFor}
+              onChange={(e) => setLookingFor(e.target.value as 'marriage' | 'dating' | 'networking')}
+              className="input-field"
+            >
+              <option value="marriage">Marriage</option>
+              <option value="dating">Dating</option>
+              <option value="networking">Networking</option>
+            </select>
           </div>
 
           <div className="grid md:grid-cols-2 gap-4">

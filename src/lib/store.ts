@@ -12,22 +12,26 @@ interface StoreData {
 
 const initialData: StoreData = {
   users: [
-    { id: 'admin1', email: 'admin@themazematch.com', password: 'admin123', role: 'admin', createdAt: new Date() },
-    { id: 'manager1', email: 'manager@themazematch.com', password: 'manager123', role: 'manager', createdAt: new Date() },
-    { id: 'user1', email: 'john@example.com', password: 'user123', role: 'member', profileId: 'profile1', createdAt: new Date() },
-    { id: 'user2', email: 'grace@example.com', password: 'user123', role: 'member', profileId: 'profile2', createdAt: new Date() },
-    { id: 'user3', email: 'michael@example.com', password: 'user123', role: 'member', profileId: 'profile3', createdAt: new Date() },
-    { id: 'user4', email: 'amaka@example.com', password: 'user123', role: 'member', profileId: 'profile4', createdAt: new Date() },
-    { id: 'user5', email: 'david@example.com', password: 'user123', role: 'member', profileId: 'profile5', createdAt: new Date() },
-    { id: 'user6', email: 'chidinma@example.com', password: 'user123', role: 'member', profileId: 'profile6', createdAt: new Date() },
+    { id: 'admin1', email: 'admin@themazematch.com', password: 'admin123', role: 'super_admin', isVerified: true, verifiedAt: new Date(), createdAt: new Date() },
+    { id: 'manager1', email: 'manager@themazematch.com', password: 'manager123', role: 'manager', isVerified: true, createdAt: new Date() },
+    { id: 'studio1', email: 'studio@themazematch.com', password: 'studio123', role: 'studio_owner', isVerified: true, createdAt: new Date() },
+    { id: 'user1', email: 'john@example.com', password: 'user123', role: 'member', profileId: 'profile1', isVerified: true, verifiedAt: new Date(), createdAt: new Date() },
+    { id: 'user2', email: 'grace@example.com', password: 'user123', role: 'member', profileId: 'profile2', isVerified: true, verifiedAt: new Date(), createdAt: new Date() },
+    { id: 'user3', email: 'michael@example.com', password: 'user123', role: 'member', profileId: 'profile3', isVerified: false, createdAt: new Date() },
+    { id: 'user4', email: 'amaka@example.com', password: 'user123', role: 'member', profileId: 'profile4', isVerified: false, createdAt: new Date() },
+    { id: 'user5', email: 'david@example.com', password: 'user123', role: 'member', profileId: 'profile5', isVerified: false, createdAt: new Date() },
   ],
   profiles: [
     {
       id: 'profile1',
       userId: 'user1',
       name: 'Emeka Okonkwo',
-      age: 32,
+      dateOfBirth: '1992-05-15',
       gender: 'male',
+      phone: '08012345678',
+      idType: 'nin',
+      idNumber: '12345678901',
+      lga: 'Lekki',
       location: 'Lekki',
       state: 'Lagos',
       occupation: 'Software Engineer',
@@ -36,15 +40,20 @@ const initialData: StoreData = {
       photos: ['https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=500&fit=crop'],
       interests: ['Technology', 'Fitness', 'Travel', 'Photography'],
       lookingFor: 'marriage',
-      verified: true,
+      isVerified: true,
+      verifiedAt: new Date(),
       createdAt: new Date()
     },
     {
       id: 'profile2',
       userId: 'user2',
       name: 'Grace Adeyemi',
-      age: 28,
+      dateOfBirth: '1996-08-22',
       gender: 'female',
+      phone: '08023456789',
+      idType: 'bvn',
+      idNumber: '23456789012',
+      lga: 'Ikeja',
       location: 'Ikeja',
       state: 'Lagos',
       occupation: 'Marketing Manager',
@@ -53,15 +62,20 @@ const initialData: StoreData = {
       photos: ['https://images.unsplash.com/photo-1531746020798-e6953b6ae501?w=400&h=500&fit=crop'],
       interests: ['Travel', 'Music', 'Fashion', 'Cooking'],
       lookingFor: 'marriage',
-      verified: true,
+      isVerified: true,
+      verifiedAt: new Date(),
       createdAt: new Date()
     },
     {
       id: 'profile3',
       userId: 'user3',
       name: 'Michael Okafor',
-      age: 35,
+      dateOfBirth: '1989-11-03',
       gender: 'male',
+      phone: '08034567890',
+      idType: 'passport',
+      idNumber: 'A1234567',
+      lga: 'Victoria Island',
       location: 'Victoria Island',
       state: 'Lagos',
       occupation: 'Business Executive',
@@ -70,15 +84,19 @@ const initialData: StoreData = {
       photos: ['https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400&h=500&fit=crop'],
       interests: ['Business', 'Volunteering', 'Sports', 'Wine & Dining'],
       lookingFor: 'dating',
-      verified: true,
+      isVerified: false,
       createdAt: new Date()
     },
     {
       id: 'profile4',
       userId: 'user4',
       name: 'Amaka Nwosu',
-      age: 26,
+      dateOfBirth: '1998-02-14',
       gender: 'female',
+      phone: '08045678901',
+      idType: 'nin',
+      idNumber: '34567890123',
+      lga: 'Ikoyi',
       location: 'Ikoyi',
       state: 'Lagos',
       occupation: 'Fashion Designer',
@@ -87,15 +105,19 @@ const initialData: StoreData = {
       photos: ['https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400&h=500&fit=crop'],
       interests: ['Fashion', 'Art', 'Dance', 'Photography'],
       lookingFor: 'marriage',
-      verified: true,
+      isVerified: false,
       createdAt: new Date()
     },
     {
       id: 'profile5',
       userId: 'user5',
       name: 'David Chukwu',
-      age: 29,
+      dateOfBirth: '1995-07-20',
       gender: 'male',
+      phone: '08056789012',
+      idType: 'drivers_license',
+      idNumber: 'DL123456',
+      lga: 'Gwagwalada',
       location: 'Abuja',
       state: 'Abuja',
       occupation: 'Medical Doctor',
@@ -104,24 +126,8 @@ const initialData: StoreData = {
       photos: ['https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&h=500&fit=crop'],
       interests: ['Music', 'Fitness', 'Reading', 'Technology'],
       lookingFor: 'marriage',
-      verified: true,
-      createdAt: new Date()
-    },
-    {
-      id: 'profile6',
-      userId: 'user6',
-      name: 'Chidinma Okeke',
-      age: 27,
-      gender: 'female',
-      location: 'Port Harcourt',
-      state: 'Rivers',
-      occupation: 'HR Professional',
-      education: 'University of Port Harcourt',
-      bio: 'I believe in authentic connections. My joy comes from helping others grow. Looking for a genuine partner to build a future with.',
-      photos: ['https://images.unsplash.com/photo-1489424731084-a5d8f219b3e5?w=400&h=500&fit=crop'],
-      interests: ['Volunteering', 'Music', 'Travel', 'Cooking'],
-      lookingFor: 'marriage',
-      verified: true,
+      isVerified: true,
+      verifiedAt: new Date(),
       createdAt: new Date()
     },
   ],
@@ -246,12 +252,12 @@ export function getProfileByUserId(userId: string): Profile | null {
   return data.profiles.find(p => p.userId === userId) || null;
 }
 
-export function createProfile(profile: Omit<Profile, 'id' | 'createdAt' | 'verified'>): Profile {
+export function createProfile(profile: Omit<Profile, 'id' | 'createdAt' | 'isVerified'>): Profile {
   const data = getStorage();
   const newProfile: Profile = {
     ...profile,
     id: 'profile' + Date.now(),
-    verified: false,
+    isVerified: false,
     createdAt: new Date(),
   };
   data.profiles.push(newProfile);
@@ -386,6 +392,7 @@ export function registerUser(email: string, password: string, role: UserRole = '
     email,
     password,
     role,
+    isVerified: false,
     createdAt: new Date(),
   };
   data.users.push(newUser);
@@ -398,7 +405,8 @@ export function verifyProfile(profileId: string): boolean {
   const profile = data.profiles.find(p => p.id === profileId);
   if (!profile) return false;
   
-  profile.verified = true;
+  profile.isVerified = true;
+  profile.verifiedAt = new Date();
   setStorage(data);
   return true;
 }
@@ -411,4 +419,44 @@ export function deactivateUser(userId: string): boolean {
   user.email = '[deactivated]' + user.email;
   setStorage(data);
   return true;
+}
+
+export function updateUserRole(userId: string, role: UserRole): boolean {
+  const data = getStorage();
+  const user = data.users.find(u => u.id === userId);
+  if (!user) return false;
+  
+  user.role = role;
+  if (role !== 'member') {
+    user.isVerified = true;
+    user.verifiedAt = new Date();
+  }
+  setStorage(data);
+  return true;
+}
+
+export function rejectProfile(profileId: string, reason: string): boolean {
+  const data = getStorage();
+  const profile = data.profiles.find(p => p.id === profileId);
+  if (!profile) return false;
+  
+  profile.isVerified = false;
+  profile.rejectionReason = reason;
+  setStorage(data);
+  return true;
+}
+
+export function getPendingVerifications(): Profile[] {
+  const data = getStorage();
+  return data.profiles.filter(p => !p.isVerified);
+}
+
+export function getVerifiedProfiles(): Profile[] {
+  const data = getStorage();
+  return data.profiles.filter(p => p.isVerified);
+}
+
+export function getProfilesByState(state: string): Profile[] {
+  const data = getStorage();
+  return data.profiles.filter(p => p.state === state);
 }
