@@ -16,7 +16,7 @@ export default function AdminPage() {
   const [activeTab, setActiveTab] = useState<'members' | 'profiles' | 'events' | 'connections'>('members');
 
   useEffect(() => {
-    if (!user || user.role !== 'admin') {
+    if (!user || (user.role !== 'admin' && user.role !== 'super_admin')) {
       router.push('/auth/login');
       return;
     }
@@ -43,7 +43,7 @@ export default function AdminPage() {
     }
   };
 
-  if (!user || user.role !== 'admin') {
+  if (!user || (user.role !== 'admin' && user.role !== 'super_admin')) {
     return null;
   }
 
@@ -62,7 +62,7 @@ export default function AdminPage() {
           </div>
           <div className="bg-[#1F1F1F] rounded-lg p-6 border border-white/5">
             <p className="text-[#A3A3A3] text-sm">Verified Profiles</p>
-            <p className="text-3xl font-bold text-white">{profiles.filter(p => p.verified).length}</p>
+            <p className="text-3xl font-bold text-white">{profiles.filter(p => p.isVerified).length}</p>
           </div>
           <div className="bg-[#1F1F1F] rounded-lg p-6 border border-white/5">
             <p className="text-[#A3A3A3] text-sm">Active Events</p>
@@ -175,9 +175,9 @@ export default function AdminPage() {
                     <div className="flex items-start justify-between">
                       <div>
                         <h3 className="text-white font-medium">{profile.name}</h3>
-                        <p className="text-[#A3A3A3] text-sm">{profile.age} • {profile.gender}</p>
+                        <p className="text-[#A3A3A3] text-sm">{profile.dateOfBirth ? new Date().getFullYear() - new Date(profile.dateOfBirth).getFullYear() : '--'} • {profile.gender}</p>
                       </div>
-                      {profile.verified ? (
+                      {profile.isVerified ? (
                         <span className="text-[#C9A962] text-xs">Verified</span>
                       ) : (
                         <button
